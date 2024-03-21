@@ -5,6 +5,12 @@ load_dotenv("bitly_token.env")
 import argparse
 
 
+parser = argparse.ArgumentParser(description='Обработка ссылки с помощью Bitly.')
+parser.add_argument('url', help='Введите URL-адрес для обработки')
+args = parser.parse_args()
+link = args.url
+
+
 def is_bitlink(bitly_token, url):
   bitlink = url.replace('https://', '')
   url = f'https://api-ssl.bitly.com/v4/bitlinks/{bitlink}'
@@ -41,13 +47,9 @@ def process_link(bitly_token, link):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Обработка ссылки с помощью Bitly.')
-    parser.add_argument('url', help='Введите URL-адрес для обработки')
-    args = parser.parse_args()
-    link = args.url
-
     bitly_token = os.environ["BITLY_TOKEN"]
     process_link(bitly_token, link)
+
 
 if __name__ == '__main__':
     main()
